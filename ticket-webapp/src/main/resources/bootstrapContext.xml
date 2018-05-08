@@ -6,7 +6,7 @@
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- Inclusion d'autres fichiers de contexte Spring -->
-    <import resource="classpath:/org/example/demo/ticket/webapp/rest/resource/org/example/demo/ticket/webapp/webappContext.xml" />
+    <import resource="classpath:/org/example/demo/ticket/webapp/webappContext.xml" />
     <import resource="classpath:/org/example/demo/ticket/business/businessContext.xml" />
     <import resource="classpath:/org/example/demo/ticket/consumer/consumerContext.xml" />" />
 </beans>
