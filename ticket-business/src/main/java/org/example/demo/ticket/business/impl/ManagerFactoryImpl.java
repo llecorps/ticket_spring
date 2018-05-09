@@ -1,4 +1,4 @@
-package org.example.demo.ticket.business.impl.manager;
+package org.example.demo.ticket.business.impl;
 
 import org.example.demo.ticket.business.contract.manager.ManagerFactory;
 import org.example.demo.ticket.business.contract.manager.ProjetManager;

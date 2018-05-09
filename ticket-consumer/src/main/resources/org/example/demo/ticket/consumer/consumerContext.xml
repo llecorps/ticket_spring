@@ -3,23 +3,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- ===== Déclaration des Managers ===== -->
-    <bean id="projetManager" class="org.example.demo.ticket.business.impl.manager.ProjetManagerImpl"/>
-    <bean id="ticketManager" class="org.example.demo.ticket.business.impl.manager.TicketManagerImpl"/>
-
-    <!-- ===== ManagerFactory ===== -->
-    <bean id="managerFactory" class="org.example.demo.ticket.business.impl.manager.ManagerFactoryImpl">
-        <property name="projetManager" ref="projetManager"/>
-        <property name="ticketManager" ref="ticketManager"/>
-    </bean>
-
+    <!-- chargement du fichier conf/db-ticket.properties -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    <property name="locations">
-        <list>
-            <value>file:${TICKET_HOME}/conf/db-ticket.properties</value>
-        </list>
-    </property>
-    <property name="ignoreUnresolvablePlaceholders" value="false" />
+        <property name="locations">
+            <list>
+                <value>file:${TICKET_HOME}/conf/db-ticket.properties</value>
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders" value="false"/>
+    </bean>
 
 
     <!-- création d'un bean javax.sql.DataSource en utilisant
@@ -32,6 +24,7 @@
         <property name="password" value="${database.ticket.password}"/>
     </bean>
 
+
     <!-- injection de la javax.sql.DataSource "dataSourceTicket"
          dans le bean parent des DAO -->
     <bean id="abstractDao" abstract="true">
@@ -43,6 +36,11 @@
     <bean id="ticketDao" class="org.example.demo.ticket.consumer.impl.dao.TicketDaoImpl"
           parent="abstractDao" />
 
+    <!-- ===== DaoFactory ===== -->
+    <bean id="daoFactory" class="org.example.demo.ticket.business.impl.DaoFactory">
+        <property name="projetDao" ref="projetDao"/>
+        <property name="ticketDao" ref="ticketDao"/>
+    </bean>
 
 
 </beans>

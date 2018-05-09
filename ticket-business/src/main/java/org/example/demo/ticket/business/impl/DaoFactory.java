@@ -1,4 +1,4 @@
-package src.main.java.org.example.demo.ticket.consumer.contract.dao;
+package org.example.demo.ticket.business.impl;
 
 /**
  * Created by esspressoh on 04.05.18.

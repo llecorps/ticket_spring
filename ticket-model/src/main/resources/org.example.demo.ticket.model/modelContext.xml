@@ -8,7 +8,7 @@
     <bean id="ticketManager" class="org.example.demo.ticket.business.impl.manager.TicketManagerImpl"/>
 
     <!-- ===== ManagerFactory ===== -->
-    <bean id="managerFactory" class="org.example.demo.ticket.business.impl.manager.ManagerFactoryImpl">
+    <bean id="managerFactory" class="org.example.demo.ticket.business.impl.ManagerFactoryImpl">
         <property name="projetManager" ref="projetManager"/>
         <property name="ticketManager" ref="ticketManager"/>
     </bean>
