@@ -1,6 +1,6 @@
 package org.example.demo.ticket.consumer.impl.dao;
 
-import javax.activation.DataSource;
+import javax.sql.DataSource;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -13,7 +13,7 @@ public class AbstractDaoImpl {
     @Named("dataSourceTicket")
     private DataSource datasource;
 
-    public DataSource getDatasource() {
+    public DataSource getDataSource() {
         return datasource;
     }
 

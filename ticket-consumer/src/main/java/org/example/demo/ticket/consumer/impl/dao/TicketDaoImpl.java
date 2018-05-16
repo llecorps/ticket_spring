@@ -2,6 +2,7 @@ package org.example.demo.ticket.consumer.impl.dao;
 
 import org.example.demo.ticket.consumer.contract.dao.TicketDao;
 import org.example.demo.ticket.consumer.impl.rowmapper.ticket.TicketStatutRM;
+import org.example.demo.ticket.model.bean.ticket.Ticket;
 import org.example.demo.ticket.model.bean.ticket.TicketStatut;
 import org.example.demo.ticket.model.recherche.ticket.RechercheTicket;
 import org.springframework.dao.DuplicateKeyException;
@@ -10,14 +11,12 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import src.main.java.org.example.demo.ticket.consumer.impl.rowmapper.ticket.TicketStatutRM;
 
 import javax.inject.Named;
 import java.sql.Types;
 import java.util.List;
-
-import static com.sun.xml.internal.ws.encoding.xml.XMLMessage.getDataSource;
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+//import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
 
 
 @Named
@@ -47,6 +46,11 @@ public class TicketDaoImpl extends AbstractDaoImpl implements TicketDao {
     }
 
     @Override
+    public void updateTicket(Ticket pTicket) {
+
+    }
+
+    @Override
     public List<TicketStatut> getListStatut() {
         String vSQL = "SELECT * FROM public.statut";
 
@@ -59,6 +63,7 @@ public class TicketDaoImpl extends AbstractDaoImpl implements TicketDao {
         return vListStatut;
     }
 
+    @Override
     public void updateTicketStatut(TicketStatut pTicketStatut) {
         String vSQL = "UPDATE statut SET libelle = :libelle WHERE id = :id";
 
@@ -84,7 +89,7 @@ public class TicketDaoImpl extends AbstractDaoImpl implements TicketDao {
         try {
             vJdbcTemplate.update(vSQL, vParams);
         } catch (DuplicateKeyException vEx) {
-            LOGGER.error("Le TicketStatut existe déjà ! id=" + pTicketStatut.getId(), vEx);
+            //LOGGER.error("Le TicketStatut existe déjà ! id=" + pTicketStatut.getId(), vEx);
             // ...
         }
     }

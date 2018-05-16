@@ -38,6 +38,14 @@ public class TicketManagerImpl extends AbstractManager implements TicketManager 
         return vEvolution;
     }
 
+    @Override
+    public List<TicketStatut> getListTicketStatut() {
+
+        List<TicketStatut> vListTicketStatut = new ArrayList<>();
+        getDaoFactory().getTicketDao().getListStatut();
+        return vListTicketStatut;
+    }
+
 
     /**
      * Renvoie la liste des {@link Ticket} correspondants aux critères de recherche.
@@ -83,6 +91,8 @@ public class TicketManagerImpl extends AbstractManager implements TicketManager 
     @Inject
     @Named("txManagerTicket")
     private PlatformTransactionManager platformTransactionManager;
+
+
 
     @Override
     public void changerStatut(Ticket pTicket, TicketStatut pNewStatut,

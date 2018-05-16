@@ -1,19 +1,23 @@
 package org.example.demo.ticket.business.impl.manager;
 
+import org.example.demo.ticket.consumer.contract.DaoFactory;
+import org.springframework.transaction.PlatformTransactionManager;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
  * Created by esspressoh on 01.05.18.
  */
-public abstract class AbstractManager {
+public  class AbstractManager {
 
 
     @Inject
     @Named("txManagerTicket")
-    private platformTransactionManager platformTransactionManager;
+    private PlatformTransactionManager platformTransactionManager;
 
-    public platformTransactionManager getPlatformTransactionManager() {
+    public PlatformTransactionManager getPlatformTransactionManager()
+    {
         return platformTransactionManager;
     }
 
@@ -22,7 +26,8 @@ public abstract class AbstractManager {
 
     @Inject
     private DaoFactory daoFactory;
-    protected DaoFactory getDaoFactory() {
+    protected DaoFactory getDaoFactory()
+    {
         return daoFactory;
     }
 
