@@ -2,8 +2,6 @@ package org.example.demo.ticket.model.bean.projet;
 
 import java.util.Date;
 
-import org.example.demo.ticket.model.bean.utilisateur.Utilisateur;
-
 
 /**
  * Objet métier représentant un Projet
@@ -17,7 +15,7 @@ public class Projet {
     private String nom;
     private Date dateCreation;
     private Boolean cloture;
-    private Utilisateur responsable;
+    private Integer responsable;
 
 
     // ==================== Constructeurs ====================
@@ -62,10 +60,10 @@ public class Projet {
     public void setCloture(Boolean pCloture) {
         cloture = pCloture;
     }
-    public Utilisateur getResponsable() {
+    public Integer getResponsable() {
         return responsable;
     }
-    public void setResponsable(Utilisateur pResponsable) {
+    public void setResponsable(Integer pResponsable) {
         responsable = pResponsable;
     }
 

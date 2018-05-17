@@ -18,6 +18,10 @@ import java.util.List;
 
 @Named
 public class TicketManagerImpl extends AbstractManager implements TicketManager {
+
+    @Inject
+    @Named("txManagerTicket")
+    private PlatformTransactionManager platformTransactionManager;
 	
 	/**
      * Cherche et renvoie le {@link Ticket} numéro {@code pNumero}
@@ -42,6 +46,14 @@ public class TicketManagerImpl extends AbstractManager implements TicketManager 
     public List<TicketStatut> getListTicketStatut() {
 
         List<TicketStatut> vListTicketStatut = new ArrayList<>();
+
+
+        DefaultTransactionDefinition vDefintion = new DefaultTransactionDefinition();
+        vDefintion.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        vDefintion.setTimeout(30); // 30 seconds
+
+
+
         getDaoFactory().getTicketDao().getListStatut();
         return vListTicketStatut;
     }
@@ -87,11 +99,6 @@ public class TicketManagerImpl extends AbstractManager implements TicketManager 
         // Je mets juste un code temporaire pour commencer le cours...
         return 42;
     }
-
-    @Inject
-    @Named("txManagerTicket")
-    private PlatformTransactionManager platformTransactionManager;
-
 
 
     @Override

@@ -15,6 +15,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import javax.inject.Named;
 import java.sql.Types;
 import java.util.List;
+
+import static org.example.demo.ticket.model.bean.ticket.TicketStatut.*;
 //import org.apache.logging.log4j.Logger;
 //import org.apache.logging.log4j.LogManager;
 
@@ -54,9 +56,13 @@ public class TicketDaoImpl extends AbstractDaoImpl implements TicketDao {
     public List<TicketStatut> getListStatut() {
         String vSQL = "SELECT * FROM public.statut";
 
-        JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
+        MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("id", TicketStatut.getId(), Types.INTEGER);
+
 
         RowMapper<TicketStatut> vRowMapper = new TicketStatutRM();
+
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 
         List<TicketStatut> vListStatut = vJdbcTemplate.query(vSQL, vRowMapper);
 

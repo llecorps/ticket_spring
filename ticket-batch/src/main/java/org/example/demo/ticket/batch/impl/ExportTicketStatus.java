@@ -2,11 +2,9 @@ package org.example.demo.ticket.batch.impl;
 
 import org.example.demo.ticket.model.bean.ticket.TicketStatut;
 import org.example.demo.ticket.model.exception.TechnicalException;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,13 +16,15 @@ import java.util.ListIterator;
  * Created by esspressoh on 09.05.18.
  */
 //config file
-@Configuration
-@ComponentScan(basePackages = { "org.example.demo.ticket.batch.*" })
-@PropertySource("classpath:config.properties")
+//@Configuration
+//@ComponentScan(basePackages = { "org.example.demo.ticket.batch.*" })
+//@PropertySource("classpath:config.properties")
 public class ExportTicketStatus extends AbstractBatch{
 
-    @Value("$file.path")
-    private String filePath;
+    //@Value(value = "$file.path")
+    @Inject
+    @Named("exportTicket")
+    protected String filePath;
 
     protected List<TicketStatut> vListTicketStatut;
 

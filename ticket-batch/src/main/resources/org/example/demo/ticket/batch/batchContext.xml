@@ -10,14 +10,15 @@
 
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <!--bean id="exportTicket" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="locations">
         <list>
-            <value>file:${TICKET_HOME}/conf/db-ticket.properties</value>
+            <value>file:${application.home}/conf/config.properties</value>
         </list>
     </property>
     <property name="ignoreUnresolvablePlaceholders" value="false" />
-    </bean>
+
+    </bean-->
 
 
 
@@ -27,15 +28,7 @@
         <property name="location" value="file:${application.home}/conf/db-ticket.properties"/>
     </bean>
 
-    <!-- création d'un bean javax.sql.DataSource en utilisant
-         des propriétés chargées depuis le fichier conf/db-ticket.properties -->
-    <bean id="dataSourceTicket" destroy-method="close"
-          class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="${database.ticket.driverClassName}"/>
-        <property name="url" value="${database.ticket.url}"/>
-        <property name="username" value="${database.ticket.username}"/>
-        <property name="password" value="${database.ticket.password}"/>
-    </bean>
+
 
     <!-- Création de la datasource "dataSourceTicket" -->
     <bean id="dataSourceTicket"
@@ -45,7 +38,14 @@
         <constructor-arg ref="dataSourceTicketConfiguration"/>
     </bean>
 
-            
-            
+    <!-- Chargement du fichier config.properties -->
+
+    <bean id="exportTicketConfiguration" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="file:${application.home}/conf/config.properties"/>
+    </bean>
+
+    <bean id="exportTicket" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <constructor-arg ref="exportTicketConfiguration"/>
+    </bean>
 </beans>
        
