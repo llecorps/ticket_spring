@@ -1,28 +1,34 @@
 package org.example.demo.ticket.consumer.impl.dao;
 
+import org.example.demo.ticket.consumer.contract.dao.ProjetDao;
 import org.example.demo.ticket.consumer.contract.dao.TicketDao;
+import org.example.demo.ticket.consumer.contract.dao.UtilisateurDao;
 import org.example.demo.ticket.consumer.impl.rowmapper.ticket.TicketStatutRM;
 import org.example.demo.ticket.model.bean.ticket.Ticket;
 import org.example.demo.ticket.model.bean.ticket.TicketStatut;
 import org.example.demo.ticket.model.recherche.ticket.RechercheTicket;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.sql.Types;
 import java.util.List;
-
-import static org.example.demo.ticket.model.bean.ticket.TicketStatut.*;
 //import org.apache.logging.log4j.Logger;
 //import org.apache.logging.log4j.LogManager;
 
 
 @Named
 public class TicketDaoImpl extends AbstractDaoImpl implements TicketDao {
+
+    @Inject
+    private ProjetDao projetDao;
+
+    @Inject
+    private UtilisateurDao utilisateurDao;
 
     @Override
     public int getCountTicket(RechercheTicket pRechercheTicket) {

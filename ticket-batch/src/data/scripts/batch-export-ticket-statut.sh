@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 __script_name=$(basename "$0")
 __script_root=$(readlink -f "$0")

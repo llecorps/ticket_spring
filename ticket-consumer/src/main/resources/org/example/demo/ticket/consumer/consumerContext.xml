@@ -27,15 +27,18 @@
         <property name="password" value="${password}"/>
     </bean>
 
-    <!-- injection de la javax.sql.DataSource "dataSourceTicket"
-         dans le bean parent des DAO -->
-    <bean id="abstractDao" abstract="true">
-        <!--property name="${abstractDao.dataSourceTicket}" ref="dataSourceTicket" /-->
-    </bean>
-
     <bean id="projetDao" class="org.example.demo.ticket.consumer.impl.dao.ProjetDaoImpl"
           parent="abstractDao" />
     <bean id="ticketDao" class="org.example.demo.ticket.consumer.impl.dao.TicketDaoImpl"
           parent="abstractDao" />
+    <bean id="UtilisateurDao" class="org.example.demo.ticket.consumer.impl.dao.UtilisateurDaoImpl"
+          parent="abstractDao" />
+
+    <!-- injection de la javax.sql.DataSource "dataSourceTicket"
+         dans le bean parent des DAO -->
+    <bean id="abstractDao" abstract="true">
+        <!--property name="${abstractDao.dataSourceTicket}" ref="dataSourceTicket" /-->
+
+    </bean>
 
 </beans>

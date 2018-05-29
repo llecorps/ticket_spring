@@ -1,6 +1,8 @@
 package org.example.demo.ticket.consumer.impl.dao;
 
 import org.example.demo.ticket.consumer.contract.dao.ProjetDao;
+import org.example.demo.ticket.consumer.contract.dao.TicketDao;
+import org.example.demo.ticket.consumer.contract.dao.UtilisateurDao;
 import org.example.demo.ticket.consumer.impl.rowmapper.projet.ProjetRM;
 import org.example.demo.ticket.model.bean.projet.Projet;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -8,6 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.sql.Types;
 import java.util.List;
@@ -17,6 +20,12 @@ import java.util.List;
  */
 @Named
 public class ProjetDaoImpl extends AbstractDaoImpl implements ProjetDao {
+
+    @Inject
+    private TicketDao ticketDao;
+
+    @Inject
+    private UtilisateurDao utilisateurDao;
 
 
     @Override

@@ -1,10 +1,10 @@
 package org.example.demo.ticket.batch.impl;
 
 import org.example.demo.ticket.model.bean.ticket.TicketStatut;
-import org.example.demo.ticket.model.exception.TechnicalException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,32 +15,29 @@ import java.util.ListIterator;
 /**
  * Created by esspressoh on 09.05.18.
  */
-//config file
-//@Configuration
+
+@Configuration
 //@ComponentScan(basePackages = { "org.example.demo.ticket.batch.*" })
-//@PropertySource("classpath:config.properties")
+@PropertySource("file:${application.home}/conf/config.properties")
 public class ExportTicketStatus extends AbstractBatch{
 
-    //@Value(value = "$file.path")
-    @Inject
-    @Named("configProperty")
+    @Value(value = "$file.path")
+    //@Inject
+    //@Named("configProperty")
     protected String filePath;
 
     protected List<TicketStatut> vListTicketStatut;
 
-    //export list TicketStatus
-    public ExportTicketStatus() {
+
+
+
+        public void getExportTicketStatus() {
 
         vListTicketStatut = new ArrayList<>();
         vListTicketStatut = getManagerFactory().getTicketManager().getListTicketStatut();
 
 
-    }
 
-
-
-        public void main(String[] pArgs) throws TechnicalException {
-        //protected void Ecrire(TicketStatut TicketStatut.toString()
         File vFile = new File(filePath);
 
         //Object[] obj = vListTicketStatut.toArray();
