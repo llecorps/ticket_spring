@@ -1,6 +1,5 @@
 package org.example.demo.ticket.consumer.impl.rowmapper.projet;
 
-import org.example.demo.ticket.model.bean.projet.Projet;
 import org.example.demo.ticket.model.bean.utilisateur.Utilisateur;
 import org.springframework.jdbc.core.RowMapper;
 

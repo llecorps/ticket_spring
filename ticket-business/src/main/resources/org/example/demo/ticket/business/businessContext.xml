@@ -9,14 +9,13 @@
         <property name="daoFactory" ref="daoFactory" />
      </bean>
 
-
     <bean id="projetManager" class="org.example.demo.ticket.business.impl.manager.ProjetManagerImpl"
           parent="abstractManager">
-
+    </bean>
 
     <bean id="ticketManager" class="org.example.demo.ticket.business.impl.manager.TicketManagerImpl"
           parent="abstractManager">
-
+    </bean>
     <!-- ===== ManagerFactory ===== -->
     <bean id="managerFactory" class="org.example.demo.ticket.business.impl.ManagerFactoryImpl">
         <property name="projetManager" ref="projetManager"/>
@@ -25,6 +24,7 @@
     <bean id="txManagerTicket" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSourceTicket"/>
     </bean>
+    <bean id="daoFactory" class="org.example.demo.ticket.consumer.impl.DaoFactoryImpl"/>
 
 
 </beans>

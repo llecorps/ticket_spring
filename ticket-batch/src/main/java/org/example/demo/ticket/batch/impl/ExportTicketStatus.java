@@ -23,7 +23,7 @@ public class ExportTicketStatus extends AbstractBatch{
 
     //@Value(value = "$file.path")
     @Inject
-    @Named("exportTicket")
+    @Named("configProperty")
     protected String filePath;
 
     protected List<TicketStatut> vListTicketStatut;
@@ -55,14 +55,15 @@ public class ExportTicketStatus extends AbstractBatch{
                 fw.write ("\r\n");
 
             }*/
+            TicketStatut vTicketStatut = new TicketStatut();
             ListIterator it = vListTicketStatut.listIterator();
 
 
                 while(it.hasNext())
                     System.out.println(it.next());
                // Object entry = it.next();
-                TicketStatut vTicketStatut = new TicketStatut();
-                //vTicketStatut.setId(entry.id);
+
+                //vTicketStatut.setId(it.
                 //vTicketStatut.setId(entry.getString("libelle"));
 
                 fw.write (vTicketStatut.toString());

@@ -9,7 +9,7 @@
 
     <!-- ===== ManagerFactory ===== -->
     <bean id="managerFactory" class="org.example.demo.ticket.business.impl.ManagerFactoryImpl">
-        <property name="projetManager" ref="projetManager"/>
-        <property name="ticketManager" ref="ticketManager"/>
+        <property name="${managerFactory.projetManager}" ref="projetManager"/>
+        <property name="${managerFactory.ticketManager}" ref="ticketManager"/>
     </bean>
 </beans>

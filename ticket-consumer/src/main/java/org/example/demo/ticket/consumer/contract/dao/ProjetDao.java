@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface ProjetDao {
 
-    Projet getProjet(Projet id);
+    Projet getProjet(Integer id);
 
     List<Projet> getListProjet();
 }

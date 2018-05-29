@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+
 
     <!-- chargement du fichier conf/db-ticket.properties -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>file:${TICKET_HOME}/conf/db-ticket.properties</value>
+                <value>file:${application.home}/conf/db-ticket.properties</value>
             </list>
         </property>
         <property name="ignoreUnresolvablePlaceholders" value="false"/>
@@ -18,29 +21,21 @@
          des propriétés chargées depuis le fichier conf/db-ticket.properties -->
     <bean id="dataSourceTicket" destroy-method="close"
           class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="${database.ticket.driverClassName}"/>
-        <property name="url" value="${database.ticket.url}"/>
-        <property name="username" value="${database.ticket.username}"/>
-        <property name="password" value="${database.ticket.password}"/>
+        <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
     </bean>
-
 
     <!-- injection de la javax.sql.DataSource "dataSourceTicket"
          dans le bean parent des DAO -->
     <bean id="abstractDao" abstract="true">
-        <property name="dataSourceTicket" ref="dataSourceTicket" />
+        <!--property name="${abstractDao.dataSourceTicket}" ref="dataSourceTicket" /-->
     </bean>
 
     <bean id="projetDao" class="org.example.demo.ticket.consumer.impl.dao.ProjetDaoImpl"
           parent="abstractDao" />
     <bean id="ticketDao" class="org.example.demo.ticket.consumer.impl.dao.TicketDaoImpl"
           parent="abstractDao" />
-
-    <!-- ===== DaoFactory ===== -->
-    <bean id="daoFactory" class="org.example.demo.ticket.business.impl.DaoFactory">
-        <property name="projetDao" ref="projetDao"/>
-        <property name="ticketDao" ref="ticketDao"/>
-    </bean>
-
 
 </beans>

@@ -2,7 +2,6 @@ package org.example.demo.ticket.business.impl.manager;
 
 import org.example.demo.ticket.business.contract.manager.ProjetManager;
 import org.example.demo.ticket.model.bean.projet.Projet;
-import org.example.demo.ticket.model.bean.utilisateur.Utilisateur;
 import org.example.demo.ticket.model.exception.NotFoundException;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -29,26 +28,16 @@ public class ProjetManagerImpl extends AbstractManager implements ProjetManager 
 
 
     @Override
-	public Projet getProjet(Projet pId) throws NotFoundException {
-        /*Je n'ai pas encore codé la DAO
-        // Je mets juste un code temporaire pour commencer le cours...
-        if (pId < 1) {
-            throw new NotFoundException("Projet non trouvé : ID=" + pId);
-        }
-        Projet vProjet = new Projet(pId);
-        vProjet.setNom("Projet n°" + pId);*/
-
-        Projet vProjet = new Projet();
-
+	//public List<Projet> getProjet(Integer pId) throws NotFoundException {
+        public Projet getProjet(Integer pId) throws NotFoundException {
 
         DefaultTransactionDefinition vDefintion = new DefaultTransactionDefinition();
         vDefintion.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
         vDefintion.setTimeout(30); // 30 seconds
 
-        //TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefintion);
-
+        //List<Projet> vProjet = new ArrayList<>();
+        Projet vProjet = new Projet();
         getDaoFactory().getProjetDao().getProjet(pId);
-
 
         return vProjet;
     }
@@ -74,7 +63,7 @@ public class ProjetManagerImpl extends AbstractManager implements ProjetManager 
         vDefintion.setTimeout(30); // 30 seconds
 
         getDaoFactory().getProjetDao().getListProjet();
-        getDaoFactory().getUtilisateurDao().getUtilisateur(Utilisateur pId)
+
 
         return vList;
     }

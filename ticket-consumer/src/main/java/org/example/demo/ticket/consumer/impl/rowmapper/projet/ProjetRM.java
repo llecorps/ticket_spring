@@ -18,7 +18,8 @@ public class ProjetRM implements RowMapper<Projet> {
         vProjet.setNom(pRS.getString("nom"));
         vProjet.setDateCreation(pRS.getDate("dateCreation"));
         vProjet.setCloture(pRS.getBoolean("cloture"));
-        vProjet.setResponsable(pRS.getString("responsable"));
+        vProjet.setResponsable(pRS.getInt("responsable"));
+
 
         return vProjet;
 

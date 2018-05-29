@@ -10,15 +10,16 @@
 
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--bean id="exportTicket" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    <property name="locations">
-        <list>
-            <value>file:${application.home}/conf/config.properties</value>
-        </list>
-    </property>
-    <property name="ignoreUnresolvablePlaceholders" value="false" />
+    <bean id="configProperty"
+          class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+    <property name="location">
 
-    </bean-->
+            <value>classpath:config.properties</value>
+
+    </property>
+    <property name="ignoreUnresolvablePlaceholders" value="true" />
+    <property name="ignoreResourceNotFound" value="true" />
+    </bean>
 
 
 
@@ -38,14 +39,6 @@
         <constructor-arg ref="dataSourceTicketConfiguration"/>
     </bean>
 
-    <!-- Chargement du fichier config.properties -->
 
-    <bean id="exportTicketConfiguration" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-        <property name="location" value="file:${application.home}/conf/config.properties"/>
-    </bean>
-
-    <bean id="exportTicket" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <constructor-arg ref="exportTicketConfiguration"/>
-    </bean>
 </beans>
        

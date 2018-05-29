@@ -2,12 +2,18 @@ package org.example.demo.ticket.model.bean.utilisateur;
 
 public class Utilisateur {
 
-    private Integer id;
+    private static Integer id;
     private String nom;
     private String prenom;
 
+    public Utilisateur(){
+        
+    }
 
-    public Integer getId() {
+    public Utilisateur(int id) {
+    }
+
+    public static Integer getId() {
         return id;
     }
     public void setId(Integer pId) {

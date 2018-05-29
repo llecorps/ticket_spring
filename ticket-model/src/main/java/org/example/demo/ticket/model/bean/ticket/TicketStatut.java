@@ -8,7 +8,7 @@ package org.example.demo.ticket.model.bean.ticket;
 public class TicketStatut {
 
     // ==================== Attributs ====================
-    private Integer id;
+    private static Integer id;
     private String libelle;
 
 
@@ -24,13 +24,13 @@ public class TicketStatut {
      *
      * @param pId -
      */
-    public TicketStatut(Integer pId) {
+    public  TicketStatut(Integer pId) {
         id = pId;
     }
 
 
     // ==================== Getters/Setters ====================
-    public Integer getId() {
+    public static Integer getId() {
         return id;
     }
     public void setId(Integer pId) {

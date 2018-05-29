@@ -20,21 +20,22 @@ public class ProjetDaoImpl extends AbstractDaoImpl implements ProjetDao {
 
 
     @Override
-    public Projet getProjet(Projet pProjet) {
-        String vSQL = "Select projet.nom,projet.date_creation,projet.cloture,utilisateur.nom,utilisateur.prenom\n" +
-                "from projet INNER JOIN utilisateur ON projet.responsable_id = utilisateur.id\n" +
-                "WHERE projet.id= :id;";
+    public Projet getProjet(Integer pId) {
+        String vSQL = "Select * from public.projet WHERE id=:id" ;
 
         MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id", pProjet.getId(), Types.INTEGER);
+        vParams.addValue("id", Projet.getId(), Types.INTEGER);
 
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 
-        RowMapper<Projet> vRowMapper = new ProjetRM();
+        //RowMapper<Projet> vRowMapper = new ProjetRM();
 
-        Projet vProjet = vJdbcTemplate.query(vSQL, vRowMapper);
+        //List<Projet> vProjet = vJdbcTemplate.query(vSQL, vRowMapper);
 
-        return vProjet;
+        Projet vProjet = vJdbcTemplate.queryForObject(vSQL, vParams, Projet.class);
+
+        //return (Projet) vProjet;
+        return  vProjet;
 
     }
 

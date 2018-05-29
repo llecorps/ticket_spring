@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProjetManager {
 	
-	Projet getProjet(Projet pId) throws NotFoundException;
+	Projet getProjet(Integer pId) throws NotFoundException;
 
 	List<Projet> getListProjet();
 

@@ -11,11 +11,12 @@ import java.util.Date;
 public class Projet {
 
     // ==================== Attributs ====================
-    private Integer id;
+    private static Integer id;
     private String nom;
     private Date dateCreation;
     private Boolean cloture;
     private Integer responsable;
+
 
 
     // ==================== Constructeurs ====================
@@ -36,7 +37,7 @@ public class Projet {
 
 
     // ==================== Getters/Setters ====================
-    public Integer getId() {
+    public static Integer getId() {
         return id;
     }
     public void setId(Integer pId) {
