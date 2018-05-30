@@ -11,6 +11,10 @@ public interface ProjetManager {
 
 	List<Projet> getListProjet();
 
+
+
+	public void insertVersion(Projet pId, String pNumero);
+
 	
 
 }

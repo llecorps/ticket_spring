@@ -2,9 +2,11 @@ package org.example.demo.ticket.business.impl.manager;
 
 import org.example.demo.ticket.business.contract.manager.ProjetManager;
 import org.example.demo.ticket.model.bean.projet.Projet;
+import org.example.demo.ticket.model.bean.projet.Version;
 import org.example.demo.ticket.model.exception.NotFoundException;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.inject.Inject;
@@ -68,4 +70,37 @@ public class ProjetManagerImpl extends AbstractManager implements ProjetManager 
         return vList;
     }
 
+    @Override
+    public void insertVersion(Projet pId, String pNumero) {
+
+        DefaultTransactionDefinition vDefintion = new DefaultTransactionDefinition();
+        vDefintion.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        vDefintion.setTimeout(30); // 30 seconds
+
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefintion);
+
+        try{
+
+            Version pVersion = new Version();
+
+            if (pId != null && pNumero != null){
+            pVersion.setProjet(pId);
+            pVersion.setNumero(pNumero);
+
+            getDaoFactory().getProjetDao().insertVersion(pVersion);
+
+            TransactionStatus vTScommit = vTransactionStatus;
+            vTransactionStatus = null;
+            platformTransactionManager.commit(vTScommit);
+
+            }
+
+        } finally {
+            if (vTransactionStatus != null) {
+                platformTransactionManager.rollback(vTransactionStatus);
+            }
+
+    }
+
+    }
 }
