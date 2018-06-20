@@ -1,6 +1,7 @@
 package org.example.demo.ticket.business.impl.manager;
 
 import org.example.demo.ticket.business.contract.manager.TicketManager;
+import org.example.demo.ticket.consumer.impl.dao.TicketDaoImpl;
 import org.example.demo.ticket.model.bean.projet.Projet;
 import org.example.demo.ticket.model.bean.ticket.*;
 import org.example.demo.ticket.model.bean.utilisateur.Utilisateur;
@@ -19,9 +20,18 @@ import java.util.List;
 @Named
 public class TicketManagerImpl extends AbstractManager implements TicketManager {
 
+
+    public TicketManagerImpl(){
+
+    }
+
+
+
     @Inject
     @Named("txManagerTicket")
     private PlatformTransactionManager platformTransactionManager;
+
+
 	
 	/**
      * Cherche et renvoie le {@link Ticket} numéro {@code pNumero}
@@ -54,7 +64,13 @@ public class TicketManagerImpl extends AbstractManager implements TicketManager 
 
 
 
-        getDaoFactory().getTicketDao().getListStatut();
+       // vListTicketStatut = getDaoFactory().getTicketDao().getListStatut();
+
+        TicketDaoImpl pTicketDaoImpl = new TicketDaoImpl();
+
+        vListTicketStatut = pTicketDaoImpl.getListStatut();
+
+
         return vListTicketStatut;
     }
 

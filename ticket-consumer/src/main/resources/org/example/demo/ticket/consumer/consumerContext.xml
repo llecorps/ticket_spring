@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
 
-    <!-- chargement du fichier conf/db-ticket.properties -->
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>file:${application.home}/conf/db-ticket.properties</value>
-            </list>
-        </property>
-        <property name="ignoreUnresolvablePlaceholders" value="false"/>
-    </bean>
 
-
-    <!-- création d'un bean javax.sql.DataSource en utilisant
-         des propriétés chargées depuis le fichier conf/db-ticket.properties -->
-    <bean id="dataSourceTicket" destroy-method="close"
-          class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="${driverClassName}"/>
-        <property name="url" value="${url}"/>
-        <property name="username" value="${username}"/>
-        <property name="password" value="${password}"/>
-    </bean>
-
-    <bean id="projetDao" class="org.example.demo.ticket.consumer.impl.dao.ProjetDaoImpl"
-          parent="abstractDao" />
+    <!--bean id="projetDao" class="org.example.demo.ticket.consumer.impl.dao.ProjetDaoImpl"
+          parent="abstractDao" /-->
     <bean id="ticketDao" class="org.example.demo.ticket.consumer.impl.dao.TicketDaoImpl"
           parent="abstractDao" />
-    <bean id="UtilisateurDao" class="org.example.demo.ticket.consumer.impl.dao.UtilisateurDaoImpl"
-          parent="abstractDao" />
+
+    <bean id="TicketDaoImpl" class="org.example.demo.ticket.consumer.impl.dao.TicketDaoImpl">
+        <property name="dataSourceTicket" ref="dataSourceTicket"/>
+    </bean>
+
+    <!--bean id="UtilisateurDao" class="org.example.demo.ticket.consumer.impl.dao.UtilisateurDaoImpl"
+          parent="abstractDao" /-->
 
     <!-- injection de la javax.sql.DataSource "dataSourceTicket"
          dans le bean parent des DAO -->
     <bean id="abstractDao" abstract="true">
-        <!--property name="${abstractDao.dataSourceTicket}" ref="dataSourceTicket" /-->
+        <property name="dataSourceTicket" ref="dataSourceTicket"/>
+    </bean>
+
+
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/db_ticket" />
+        <property name="username" value="ticket" />
+        <property name="password" value="ticket" />
+
 
     </bean>
+
+
+
+
+
+
+
 
 </beans>

@@ -1,10 +1,14 @@
 package org.example.demo.ticket.batch.impl;
 
+import org.example.demo.ticket.business.contract.manager.ManagerFactory;
+import org.example.demo.ticket.business.impl.ManagerFactoryImpl;
 import org.example.demo.ticket.model.bean.ticket.TicketStatut;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,6 +23,7 @@ import java.util.ListIterator;
 @Configuration
 //@ComponentScan(basePackages = { "org.example.demo.ticket.batch.*" })
 @PropertySource("file:${application.home}/conf/config.properties")
+@Named("managerFactory")
 public class ExportTicketStatus extends AbstractBatch{
 
     @Value(value = "$file.path")
@@ -26,15 +31,24 @@ public class ExportTicketStatus extends AbstractBatch{
     //@Named("configProperty")
     protected String filePath;
 
+    @Inject
+    protected ManagerFactory managerfactory = new ManagerFactoryImpl();
+
     protected List<TicketStatut> vListTicketStatut;
 
 
+    @Inject
+    public ExportTicketStatus(ManagerFactory pManagerFactory) {
+        this.managerfactory = pManagerFactory;
+    }
 
 
         public void getExportTicketStatus() {
 
         vListTicketStatut = new ArrayList<>();
         vListTicketStatut = getManagerFactory().getTicketManager().getListTicketStatut();
+        //vListTicketStatut = managerfactory.getTicketManager().getListTicketStatut();
+
 
 
 

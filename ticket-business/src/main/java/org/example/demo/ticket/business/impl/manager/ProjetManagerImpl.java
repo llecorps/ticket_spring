@@ -30,15 +30,18 @@ public class ProjetManagerImpl extends AbstractManager implements ProjetManager 
 
 
     @Override
-	//public List<Projet> getProjet(Integer pId) throws NotFoundException {
+
         public Projet getProjet(Integer pId) throws NotFoundException {
 
         DefaultTransactionDefinition vDefintion = new DefaultTransactionDefinition();
         vDefintion.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
         vDefintion.setTimeout(30); // 30 seconds
 
-        //List<Projet> vProjet = new ArrayList<>();
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefintion);
+
+
         Projet vProjet = new Projet();
+
         getDaoFactory().getProjetDao().getProjet(pId);
 
         return vProjet;

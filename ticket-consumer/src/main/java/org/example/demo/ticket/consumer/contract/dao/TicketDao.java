@@ -11,6 +11,7 @@ import java.util.List;
  */
 public interface TicketDao {
 
+
     List<TicketStatut> getListStatut();
     int getCountTicket(RechercheTicket pRechercheTicket);
 

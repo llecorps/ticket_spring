@@ -11,16 +11,11 @@
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-
-
-
     <!-- Chargement du fichier properties contenant
-        la configuration de la datasource vers DB_TICKET  -->
+           la configuration de la datasource vers DB_TICKET  -->
     <bean id="dataSourceTicketConfiguration" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="location" value="file:${application.home}/conf/db-ticket.properties"/>
     </bean>
-
-
 
     <!-- Création de la datasource "dataSourceTicket" -->
     <bean id="dataSourceTicket"
@@ -28,6 +23,26 @@
           factory-method="createDataSource"
           destroy-method="close">
         <constructor-arg ref="dataSourceTicketConfiguration"/>
+
+    </bean>
+
+
+    <!-- ==== AbstractResource - TO DELETE ===== -->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass" value="org.example.demo.ticket.batch.impl.AbstractBatch"/>
+        <property name="targetMethod" value="setManagerFactory"/>
+        <property name="arguments" ref="managerFactory"/>
+
+    </bean>
+
+    <!-- ===== Déclaration des Managers ===== -->
+    <bean id="projetManager" class="org.example.demo.ticket.business.impl.manager.ProjetManagerImpl"/>
+    <bean id="ticketManager" class="org.example.demo.ticket.business.impl.manager.TicketManagerImpl"/>
+
+    <!-- ===== ManagerFactory ===== -->
+    <bean id="managerFactory" class="org.example.demo.ticket.business.impl.ManagerFactoryImpl">
+        <property name="projetManager" ref="projetManager"/>
+        <property name="ticketManager" ref="ticketManager"/>
     </bean>
 
 
