@@ -19,6 +19,7 @@ import javax.inject.Named;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 //import org.apache.logging.log4j.Logger;
 //import org.apache.logging.log4j.LogManager;
 
@@ -38,6 +39,10 @@ public class TicketDaoImpl extends AbstractDaoImpl implements TicketDao {
 
     @Inject
     private UtilisateurDao utilisateurDao;
+
+    private JdbcTemplate jdbcTemplate;
+
+
 
     public TicketDaoImpl(){
         super();
@@ -71,10 +76,13 @@ public class TicketDaoImpl extends AbstractDaoImpl implements TicketDao {
 
     }
 
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public List<TicketStatut> getListStatut() {
-        //String vSQL = "SELECT * FROM public.statut";
+        String vSQL = "SELECT * FROM public.statut";
 
         //MapSqlParameterSource vParams = new MapSqlParameterSource();
         //vParams.addValue("id", TicketStatut.getId(), Types.INTEGER);
@@ -93,14 +101,26 @@ public class TicketDaoImpl extends AbstractDaoImpl implements TicketDao {
              //       "SELECT * FROM public.statut",
               //      ArrayList.class);
 
-        JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
+       // JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
 
-        List<TicketStatut> vListStatut = vJdbcTemplate.queryForObject(
-                      "SELECT * FROM public.statut",
-                     ArrayList.class);
+        List<TicketStatut> vListStatut = new ArrayList<TicketStatut>();
+       List<Map<String, Object>> rows = getJdbcTemplate().queryForList(vSQL);
+
+        for (Map row : rows) {
+            TicketStatut ticketStatut = new TicketStatut();
+            ticketStatut.setId((int)(row.get("ID")));
+            ticketStatut.setLibelle((String)row.get("libelle"));
+            vListStatut.add(ticketStatut);
+;        }
+
+
+
         return vListStatut;
 
+
     }
+
+
 
     @Override
     public void updateTicketStatut(TicketStatut pTicketStatut) {
@@ -135,5 +155,11 @@ public class TicketDaoImpl extends AbstractDaoImpl implements TicketDao {
 
 
     public void setDataSourceTicket(org.apache.commons.dbcp2.BasicDataSource dataSourceTicket) {
+    }
+
+
+
+    public JdbcTemplate getJdbcTemplate() {
+        return jdbcTemplate;
     }
 }

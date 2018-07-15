@@ -7,6 +7,8 @@ import org.example.demo.ticket.model.bean.ticket.*;
 import org.example.demo.ticket.model.bean.utilisateur.Utilisateur;
 import org.example.demo.ticket.model.exception.NotFoundException;
 import org.example.demo.ticket.model.recherche.ticket.RechercheTicket;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -55,6 +57,8 @@ public class TicketManagerImpl extends AbstractManager implements TicketManager 
     @Override
     public List<TicketStatut> getListTicketStatut() {
 
+        ApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
+
         List<TicketStatut> vListTicketStatut = new ArrayList<>();
 
 
@@ -66,7 +70,7 @@ public class TicketManagerImpl extends AbstractManager implements TicketManager 
 
        // vListTicketStatut = getDaoFactory().getTicketDao().getListStatut();
 
-        TicketDaoImpl pTicketDaoImpl = new TicketDaoImpl();
+        TicketDaoImpl pTicketDaoImpl = (TicketDaoImpl)ctx.getBean("edao");
 
         vListTicketStatut = pTicketDaoImpl.getListStatut();
 

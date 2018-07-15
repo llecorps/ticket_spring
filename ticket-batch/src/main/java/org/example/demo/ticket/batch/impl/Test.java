@@ -17,8 +17,15 @@ public class Test {
 
         ManagerFactory vManagerFactory = vApplicationContext.getBean("managerFactory",ManagerFactory.class);
 
+        //ExportTicketStatus myconfig =(ExportTicketStatus)vApplicationContext.getBean("Myrep");
+
         ExportTicketStatus vExportTicketStatus = new ExportTicketStatus(vManagerFactory);
+        SystemSettings pSystemSettings = new SystemSettings();
         vExportTicketStatus.getExportTicketStatus();
+
+       // SpringJavaConfigurator pSpringJavaConfigurator = new SpringJavaConfigurator();
+        //SystemSettings pSystemSettings = new SystemSettings();
+        //System.out.println("mon application est ="+pSpringJavaConfigurator.getSystemSettings());
 
     }
 
