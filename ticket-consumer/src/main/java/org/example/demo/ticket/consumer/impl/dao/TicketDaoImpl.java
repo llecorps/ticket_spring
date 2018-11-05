@@ -1,14 +1,15 @@
 package org.example.demo.ticket.consumer.impl.dao;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.example.demo.ticket.consumer.contract.dao.ProjetDao;
 import org.example.demo.ticket.consumer.contract.dao.TicketDao;
 import org.example.demo.ticket.consumer.contract.dao.UtilisateurDao;
-import org.example.demo.ticket.consumer.impl.rowmapper.ticket.TicketStatutRM;
 import org.example.demo.ticket.model.bean.ticket.Ticket;
 import org.example.demo.ticket.model.bean.ticket.TicketStatut;
 import org.example.demo.ticket.model.recherche.ticket.RechercheTicket;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,7 +17,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 //import org.apache.logging.log4j.Logger;
 //import org.apache.logging.log4j.LogManager;
 
@@ -24,11 +27,26 @@ import java.util.List;
 @Named
 public class TicketDaoImpl extends AbstractDaoImpl implements TicketDao {
 
+
+
+
+
+    /** Logger pour la classe */
+    private static final Log LOGGER = LogFactory.getLog(TicketDaoImpl.class);
+
     @Inject
     private ProjetDao projetDao;
 
     @Inject
     private UtilisateurDao utilisateurDao;
+
+    private JdbcTemplate jdbcTemplate;
+
+
+
+    public TicketDaoImpl(){
+        super();
+    }
 
     @Override
     public int getCountTicket(RechercheTicket pRechercheTicket) {
@@ -58,22 +76,51 @@ public class TicketDaoImpl extends AbstractDaoImpl implements TicketDao {
 
     }
 
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     @Override
     public List<TicketStatut> getListStatut() {
         String vSQL = "SELECT * FROM public.statut";
 
-        MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id", TicketStatut.getId(), Types.INTEGER);
+        //MapSqlParameterSource vParams = new MapSqlParameterSource();
+        //vParams.addValue("id", TicketStatut.getId(), Types.INTEGER);
 
 
-        RowMapper<TicketStatut> vRowMapper = new TicketStatutRM();
+        //RowMapper<TicketStatut> vRowMapper = new TicketStatutRM();
 
-        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+        //NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 
-        List<TicketStatut> vListStatut = vJdbcTemplate.query(vSQL, vRowMapper);
+        //List<TicketStatut> vListStatut = vJdbcTemplate.query(vSQL, vRowMapper);
+
+
+            //JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
+
+            //List<TicketStatut> vListStatut = vJdbcTemplate.queryForObject(
+             //       "SELECT * FROM public.statut",
+              //      ArrayList.class);
+
+       // JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
+
+        List<TicketStatut> vListStatut = new ArrayList<TicketStatut>();
+       List<Map<String, Object>> rows = getJdbcTemplate().queryForList(vSQL);
+
+        for (Map row : rows) {
+            TicketStatut ticketStatut = new TicketStatut();
+            ticketStatut.setId((int)(row.get("ID")));
+            ticketStatut.setLibelle((String)row.get("libelle"));
+            vListStatut.add(ticketStatut);
+;        }
+
+
 
         return vListStatut;
+
+
     }
+
+
 
     @Override
     public void updateTicketStatut(TicketStatut pTicketStatut) {
@@ -101,10 +148,18 @@ public class TicketDaoImpl extends AbstractDaoImpl implements TicketDao {
         try {
             vJdbcTemplate.update(vSQL, vParams);
         } catch (DuplicateKeyException vEx) {
-            //LOGGER.error("Le TicketStatut existe déjà ! id=" + pTicketStatut.getId(), vEx);
+            LOGGER.error("Le TicketStatut existe déjà ! id=" + pTicketStatut.getId(), vEx);
             // ...
         }
     }
 
 
+    public void setDataSourceTicket(org.apache.commons.dbcp2.BasicDataSource dataSourceTicket) {
+    }
+
+
+
+    public JdbcTemplate getJdbcTemplate() {
+        return jdbcTemplate;
+    }
 }

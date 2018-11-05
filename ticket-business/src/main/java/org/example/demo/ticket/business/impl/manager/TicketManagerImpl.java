@@ -1,11 +1,14 @@
 package org.example.demo.ticket.business.impl.manager;
 
 import org.example.demo.ticket.business.contract.manager.TicketManager;
+import org.example.demo.ticket.consumer.impl.dao.TicketDaoImpl;
 import org.example.demo.ticket.model.bean.projet.Projet;
 import org.example.demo.ticket.model.bean.ticket.*;
 import org.example.demo.ticket.model.bean.utilisateur.Utilisateur;
 import org.example.demo.ticket.model.exception.NotFoundException;
 import org.example.demo.ticket.model.recherche.ticket.RechercheTicket;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -19,9 +22,18 @@ import java.util.List;
 @Named
 public class TicketManagerImpl extends AbstractManager implements TicketManager {
 
+
+    public TicketManagerImpl(){
+
+    }
+
+
+
     @Inject
     @Named("txManagerTicket")
     private PlatformTransactionManager platformTransactionManager;
+
+
 	
 	/**
      * Cherche et renvoie le {@link Ticket} numéro {@code pNumero}
@@ -45,6 +57,8 @@ public class TicketManagerImpl extends AbstractManager implements TicketManager 
     @Override
     public List<TicketStatut> getListTicketStatut() {
 
+        ApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext.xml");
+
         List<TicketStatut> vListTicketStatut = new ArrayList<>();
 
 
@@ -54,7 +68,13 @@ public class TicketManagerImpl extends AbstractManager implements TicketManager 
 
 
 
-        getDaoFactory().getTicketDao().getListStatut();
+       // vListTicketStatut = getDaoFactory().getTicketDao().getListStatut();
+
+        TicketDaoImpl pTicketDaoImpl = (TicketDaoImpl)ctx.getBean("edao");
+
+        vListTicketStatut = pTicketDaoImpl.getListStatut();
+
+
         return vListTicketStatut;
     }
 

@@ -1,6 +1,7 @@
 package org.example.demo.ticket.consumer.impl.dao;
 
-import jdk.internal.instrumentation.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.example.demo.ticket.consumer.contract.dao.ProjetDao;
 import org.example.demo.ticket.consumer.contract.dao.TicketDao;
 import org.example.demo.ticket.consumer.contract.dao.UtilisateurDao;
@@ -25,7 +26,9 @@ import java.util.List;
 @Named
 public class ProjetDaoImpl extends AbstractDaoImpl implements ProjetDao {
 
-    private static final Logger LOGGER = null;
+
+    private static final Log LOGGER = LogFactory.getLog(ProjetDaoImpl.class);
+
     @Inject
     private TicketDao ticketDao;
 
@@ -42,9 +45,7 @@ public class ProjetDaoImpl extends AbstractDaoImpl implements ProjetDao {
 
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 
-        //RowMapper<Projet> vRowMapper = new ProjetRM();
 
-        //List<Projet> vProjet = vJdbcTemplate.query(vSQL, vRowMapper);
 
         Projet vProjet = vJdbcTemplate.queryForObject(vSQL, vParams, Projet.class);
 
