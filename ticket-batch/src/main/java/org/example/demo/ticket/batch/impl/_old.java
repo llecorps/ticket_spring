@@ -28,7 +28,7 @@ import java.util.ListIterator;
 @Configuration
 @PropertySource("classpath:config.properties")
 @ComponentScan(basePackages = "*" )
-public class ExportTicketStatus extends AbstractBatch{
+public class _old extends AbstractBatch{
 
    @Autowired
    Environment env;
@@ -61,7 +61,7 @@ public class ExportTicketStatus extends AbstractBatch{
 
 
     @Inject
-    public ExportTicketStatus(ManagerFactory pManagerFactory) {
+    public _old(ManagerFactory pManagerFactory) {
 
 
         this.managerfactory = pManagerFactory;
