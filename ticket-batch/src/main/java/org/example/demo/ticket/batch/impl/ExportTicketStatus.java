@@ -114,12 +114,14 @@ public class ExportTicketStatus extends AbstractBatch{
                 //vTicketStatut.setId(entry.getString("libelle"));
 
                 fw.write (vTicketStatut.toString());
+
                 fw.write ("\r\n");
 
                 fw.close();
 
         } catch (IOException e) {
             e.printStackTrace();
+
         }
 
             return mybean;
