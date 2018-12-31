@@ -1,0 +1,3 @@
+TicketStatut {id=3, libelle="Ouvert"}
+TicketStatut {id=3, libelle="En cours de traitement"}
+TicketStatut {id=3, libelle="Fermé"}

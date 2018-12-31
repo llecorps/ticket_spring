@@ -3,7 +3,6 @@ package org.example.demo.ticket.batch;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.example.demo.ticket.batch.impl.ExportTicketStatus;
 import org.example.demo.ticket.business.contract.manager.ManagerFactory;
 import org.example.demo.ticket.model.exception.TechnicalException;
 import org.springframework.context.ApplicationContext;
@@ -41,8 +40,7 @@ public class Main {
             String vTraitementId = pArgs[0];
             if ("ExportTicketStatus".equals(vTraitementId)) {
                 LOGGER.info("Execution du traitement : ExportTicketStatus");
-                ExportTicketStatus vExportTicketStatus = new ExportTicketStatus(vManagerFactory);
-                vExportTicketStatus.getExportTicketStatus();
+
             } else {
                 throw new TechnicalException("Traitement inconnu : " + vTraitementId);
             }

@@ -2,8 +2,10 @@ package org.example.demo.ticket.batch.impl;
 
 import org.example.demo.ticket.business.contract.manager.ManagerFactory;
 
-public  class AbstractBatch {
-
+/**
+ * Created by TheAdmin on 31.12.2018.
+ */
+public class AbstractBatch {
     private static ManagerFactory managerFactory;
 
     protected static ManagerFactory getManagerFactory() {
